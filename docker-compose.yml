@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  client:
+    build: ./client
+    volumes:
+      - ./client:/app/client
+    restart: always
+    stdin_open: true
+    ports:
+      - "3001:3001"
