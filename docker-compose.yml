@@ -1,9 +1,11 @@
 version: '3.7'
 services:
   client:
-    build: ./client
+    build:
+      context: ./client
+      dockerfile: ../docker/client/Dockerfile.dev
     volumes:
-      - ./client:/app/client
+      - ./client:/app
     restart: always
     stdin_open: true
     ports:
