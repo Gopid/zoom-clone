@@ -1,0 +1,20 @@
+{
+  "name": "zoom-clone",
+  "version": "1.0.0",
+  "description": "The purpose of this project is to demonstrate how an application works accross the stack through the example of a Zoom clone.",
+  "main": "index.js",
+  "scripts": {
+    "terraform": "docker-compose -f ./terraform/docker-compose.yml run --rm terraform"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gopid/zoom-clone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gopid/zoom-clone/issues"
+  },
+  "homepage": "https://github.com/Gopid/zoom-clone#readme"
+}
