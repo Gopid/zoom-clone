@@ -1,13 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import routes from '../routes';
 import Join from './pages/Join/Join';
 import Main from './pages/Main/Main';
 import Meeting from './pages/Meeting/Meeting';
 
-
-function App() {
+const App: React.FunctionComponent = () => {
   return (
     <BrowserRouter>
       <Switch>
@@ -23,6 +22,6 @@ function App() {
       </Switch>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

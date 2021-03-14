@@ -1,5 +1,5 @@
 export default {
-    JOIN: '/join',
-    MEETING: '/meeting/:meetingId',
-    MAIN: '/',
-}
+  JOIN: '/join',
+  MEETING: '/meeting/:meetingId',
+  MAIN: '/',
+};
