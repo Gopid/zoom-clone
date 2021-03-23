@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": ["build/", ".eslintrc.js"],
+  "ignorePatterns": ["build/", "node_modules/"],
   "extends": [
     "react-app",
     "react-app/jest",
@@ -24,7 +24,7 @@
       "rules": {
         "react/prop-types": "off",
         "@typescript-eslint/no-use-before-define": "off",
-        "no-debugger": "off"
+        "no-debugger": "warn"
       }
     }
   ]
