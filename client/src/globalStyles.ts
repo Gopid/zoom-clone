@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
 import { normalize } from 'styled-normalize';
-import LatoFont from './assets/Lato-Bold.ttf';
 
 const GlobalStyles = createGlobalStyle`
   ${normalize}
@@ -18,12 +17,25 @@ const GlobalStyles = createGlobalStyle`
     background: ${({ theme }) => theme.colors.body};
     color: ${({ theme }) => theme.colors.text};
     font-family: Lato;
-    transition: all 0.50s linear;
   }
 
-  @font-face {
-    font-family: 'Lato';
-    src: url(${LatoFont}) format('truetype');
+  h1, h2, h3 {
+    font-weight: 600;
+  }
+
+  h1 {
+    font-size: ${({ theme }) => theme.pxToRem(48)};
+    line-height: ${({ theme }) => theme.pxToRem(52)};
+  }
+
+  h2 {
+    font-size: ${({ theme }) => theme.pxToRem(36)};
+    line-height: ${({ theme }) => theme.pxToRem(40)};
+  }
+
+  h3 {
+    font-size: ${({ theme }) => theme.pxToRem(24)};
+    line-height: ${({ theme }) => theme.pxToRem(28)};
   }
 `;
 

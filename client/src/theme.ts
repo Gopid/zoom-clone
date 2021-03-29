@@ -3,6 +3,8 @@ const theme = {
   colors: {
     body: '#FFFFFF',
     text: '#232333',
+    text1: '#747487',
+    divider: '#e7e7e7',
     disabledText: '#909096',
     disabledBackground: '#52528017',
     offText: '#FFFFFF',

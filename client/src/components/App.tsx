@@ -9,6 +9,7 @@ import Meeting from 'pages/Meeting/Meeting';
 import theme from 'theme';
 import Header from 'components/Header/Header';
 import GlobalStyles from 'globalStyles';
+import 'assets/font.css';
 
 const routesWithOutHeader = [routes.MEETING];
 const routesWithHeader = Object.values(routes).filter(

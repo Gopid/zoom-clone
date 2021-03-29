@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import constants from '../../../constants';
 
 export enum ButtonVariants {
   primaryBlue,
@@ -8,12 +9,13 @@ export enum ButtonVariants {
   text,
 }
 
-enum ButtonSizes {
+export enum ButtonSizes {
   large,
+  medium,
   small,
 }
 
-interface ButtonProps {
+export interface ButtonProps {
   variant?: ButtonVariants;
   type?: 'button' | 'submit' | 'reset';
   fluid?: boolean;
@@ -59,16 +61,28 @@ const StyledBaseButton = styled.button<ButtonProps>`
     ${fluid ? 'width: 100%' : ''};
     color: ${theme.colors.offText};
     padding: ${theme.pxToRem(5)} ${theme.pxToRem(16)};
-    border-radius: ${theme.pxToRem(12)};
+    border-radius: ${theme.pxToRem(8)};
     font-size: ${theme.pxToRem(14)};
-    height: ${theme.pxToRem(32)};
+    height: ${theme.pxToRem(constants.height.small)};
     padding: 0 ${theme.pxToRem(16)};
+
+    ${
+      size === ButtonSizes.medium
+        ? `
+      border-radius: ${theme.pxToRem(12)};
+      font-size: ${theme.pxToRem(16)};
+      height: ${theme.pxToRem(constants.height.medium)};
+      padding: ${theme.pxToRem(5)} ${theme.pxToRem(16)};
+    `
+        : ''
+    }
 
     ${
       size === ButtonSizes.large
         ? `
+      border-radius: ${theme.pxToRem(14)};
       font-size: ${theme.pxToRem(20)};
-      height: ${theme.pxToRem(56)};
+      height: ${theme.pxToRem(constants.height.large)};
       padding: ${theme.pxToRem(5)} ${theme.pxToRem(16)};
     `
         : ''
@@ -98,6 +112,7 @@ const StyledPrimaryBlueButton = styled(StyledBaseButton)<ButtonProps>`
   ${({ theme }) => `
     background: ${theme.colors.primaryBlue};
     &:hover {
+      color: ${theme.colors.offText};
       background: ${theme.colors.primaryLightBlue};
     }
   `}
@@ -107,6 +122,7 @@ const StyledPrimaryOrangeButton = styled(StyledBaseButton)<ButtonProps>`
   ${({ theme }) => `
     background: ${theme.colors.primaryOrange};
     &:hover {
+      color: ${theme.colors.offText};
       background: ${theme.colors.primaryLightOrange};
     }
   `}
