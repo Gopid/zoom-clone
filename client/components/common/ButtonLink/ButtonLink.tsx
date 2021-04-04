@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import Link from 'components/common/Link/Link';
 import Button, { ButtonProps, ButtonSizes, ButtonVariants } from 'components/common/Button/Button';
 
 export const ButtonLinkSizes = ButtonSizes;
@@ -7,13 +7,13 @@ export const ButtonLinkSizes = ButtonSizes;
 export const ButtonLinkVariants = ButtonVariants;
 
 interface ButtonLinkProps extends ButtonProps {
-  to: string;
+  href: string;
 }
 
-const ButtonLink: FunctionComponent<ButtonLinkProps> = ({ children, to, ...props }) => (
-  <RouterLink to={to}>
+const ButtonLink: FunctionComponent<ButtonLinkProps> = ({ children, href, ...props }) => (
+  <Link href={href}>
     <Button {...props}>{children}</Button>
-  </RouterLink>
+  </Link>
 );
 
 export default ButtonLink;

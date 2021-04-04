@@ -4,7 +4,7 @@
   "editor.tabSize": 2,
   "prettier.jsxSingleQuote": false,
   "prettier.singleQuote": true,
-  "eslint.validate": ["javascript", "javascriptreact"],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript"],
   "eslint.workingDirectories": ["client"],
   "css.lint.unknownAtRules": "ignore"
 }

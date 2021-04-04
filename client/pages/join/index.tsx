@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import { generatePath, RouteComponentProps } from 'react-router-dom';
 import Button, { ButtonSizes } from 'components/common/Button/Button';
 import Input, { InputSizes } from 'components/common/Input/Input';
-import routes from 'routes';
+import routes, { generatePath } from 'routes';
 
-const Join: React.FunctionComponent<RouteComponentProps> = (props) => {
+const Join: React.FunctionComponent = () => {
+  const router = useRouter();
   const [meetingId, setMeetingId] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -16,7 +17,7 @@ const Join: React.FunctionComponent<RouteComponentProps> = (props) => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    props.history.push(generatePath(routes.MEETING, { meetingId }));
+    router.push(generatePath(routes.MEETING, { meetingId }));
   };
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import Image from 'next/image';
+import Link from 'components/common/Link/Link';
 import ButtonLink, {
   ButtonLinkVariants,
   ButtonLinkSizes,
@@ -10,14 +11,14 @@ import routes from 'routes';
 const Header: React.FunctionComponent = () => (
   <StyledHeader>
     <StyledNav>
-      <Link to={routes.ROOT}>
-        <StyledLogo src="/ZoomLogo.png" alt="Zoom logo" />
+      <Link href={routes.ROOT}>
+        <StyledLogo src="/ZoomLogo.png" alt="Zoom logo" height={25} width={110} />
       </Link>
       <div>
-        <StyledMenuItem to={routes.SIGN_IN}>JOIN A MEETING</StyledMenuItem>
-        <StyledMenuItem to={routes.SIGN_IN}>SIGN IN</StyledMenuItem>
+        <StyledMenuItem href={routes.JOIN}>JOIN A MEETING</StyledMenuItem>
+        <StyledMenuItem href={routes.SIGN_IN}>SIGN IN</StyledMenuItem>
         <ButtonLink
-          to={routes.SIGN_UP}
+          href={routes.SIGN_UP}
           variant={ButtonLinkVariants.primaryOrange}
           size={ButtonLinkSizes.small}
         >
@@ -45,12 +46,10 @@ const StyledNav = styled.nav`
   justify-content: space-between;
 `;
 
-const StyledLogo = styled.img`
+const StyledLogo = styled(Image)`
   ${({ theme }) => `
-    height: ${theme.pxToRem(25)};
     margin-right: ${theme.pxToRem(20)};
   `}
-  width: auto;
 `;
 
 const StyledMenuItem = styled(Link)`

@@ -1,30 +1,19 @@
 {
   "ignorePatterns": ["build/", "node_modules/"],
-  "extends": [
-    "react-app",
-    "react-app/jest",
-    "airbnb-typescript",
-    "airbnb/hooks",
-    "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "plugin:prettier/recommended"
-  ],
+  "extends": ["plugin:@next/next/recommended"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": 2018,
-    "project": "./tsconfig.json",
-    "sourceType": "module"
+    "requireConfigFile": false,
+    "sourceType": "module",
+    "babelOptions": {
+      "presets": ["next/babel"]
+    }
   },
   "overrides": [
     {
       "files": ["*.ts", "*.tsx"],
       "rules": {
-        "react/prop-types": "off",
         "@typescript-eslint/no-use-before-define": "off",
-        "react/jsx-props-no-spreading": "off",
         "no-debugger": "warn"
       }
     }
