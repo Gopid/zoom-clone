@@ -15,7 +15,7 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta
           name="viewport"
-          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5,user-scalable=no"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=5"
         />
         <meta name="description" content="Zoom clone" />
         <meta name="keywords" content="Keywords" />

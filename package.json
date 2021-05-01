@@ -16,5 +16,6 @@
   "bugs": {
     "url": "https://github.com/Gopid/zoom-clone/issues"
   },
-  "homepage": "https://github.com/Gopid/zoom-clone#readme"
+  "homepage": "https://github.com/Gopid/zoom-clone#readme",
+  "devDependencies": {}
 }
