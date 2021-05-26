@@ -1,43 +1,20 @@
-import { FunctionComponent, useRef, useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-
-function WebCam({ requestedMedia }: any) {
-  const videoRef: any = useRef(null);
-  const [mediaStream, setMediaStream] = useState<any>(null);
-
-  function handleCanPlay() {
-    videoRef.current.play();
-  }
-
-  useEffect(() => {
-    async function enableStream() {
-      const stream: any = await navigator.mediaDevices.getUserMedia(requestedMedia);
-      setMediaStream(stream);
-
-      videoRef.current.srcObject = stream;
-    }
-
-    if (!mediaStream) {
-      enableStream();
-    } else {
-      return function cleanup() {
-        mediaStream.getTracks().forEach((track: any) => {
-          track.stop();
-        });
-      };
-    }
-  }, [mediaStream, requestedMedia]);
-
-  return <video ref={videoRef} onCanPlay={handleCanPlay} autoPlay playsInline muted />;
-}
-
-const CAPTURE_OPTIONS = {
-  audio: false,
-  video: { facingMode: 'environment' },
-};
+import React, { useRef, FunctionComponent, useState } from 'react';
+import Webcam from 'react-webcam';
+import Recording from 'components/Recording/Recording';
 
 const Meeting: FunctionComponent = () => {
-  return <WebCam requestedMedia={CAPTURE_OPTIONS} />;
+  const webcamRef = useRef<Webcam>(null);
+  const [isWebcamOn, setIsWebcamOn] = useState(false);
+  const [isMicrophoneOn, setIsMicrophoneOn] = useState(false);
+
+  return (
+    <>
+      {isWebcamOn && <Webcam audio={false} ref={webcamRef} />}
+      <Recording webcamRef={webcamRef} />
+      <button onClick={() => setIsWebcamOn(!isWebcamOn)}>Toggle Webcam</button>
+      <button onClick={() => setIsMicrophoneOn(!isMicrophoneOn)}>Toggle Microphone</button>
+    </>
+  );
 };
 
 export default Meeting;
