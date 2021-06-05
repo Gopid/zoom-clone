@@ -7,6 +7,7 @@ export enum ButtonVariants {
   primaryOrange,
   outline,
   text,
+  danger,
 }
 
 export enum ButtonSizes {
@@ -21,6 +22,7 @@ export interface ButtonProps {
   fluid?: boolean;
   size?: ButtonSizes;
   disabled?: boolean;
+  className?: string;
 }
 
 const Button: React.FunctionComponent<ButtonProps> = ({
@@ -30,6 +32,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   children,
   variant,
   disabled = false,
+  className,
 }) => {
   let Component;
   switch (variant) {
@@ -42,12 +45,15 @@ const Button: React.FunctionComponent<ButtonProps> = ({
     case ButtonVariants.text:
       Component = StyledTextButton;
       break;
+    case ButtonVariants.danger:
+      Component = StyledDangerButton;
+      break;
     default:
       Component = StyledPrimaryBlueButton;
   }
 
   return (
-    <Component type={type} fluid={fluid} size={size} disabled={disabled}>
+    <Component type={type} fluid={fluid} size={size} disabled={disabled} className={className}>
       {children}
     </Component>
   );
@@ -142,6 +148,18 @@ const StyledTextButton = styled(StyledBaseButton)<ButtonProps>`
     &:hover {
       background: ${theme.colors.lightOutline};
       color: ${theme.colors.primaryDarkBlue};
+    }
+  `}
+`;
+
+const StyledDangerButton = styled(StyledBaseButton)<ButtonProps>`
+  ${({ theme }) => `
+    background: ${theme.colors.fadedDanger};
+    font-weight: bold;
+    color: ${theme.colors.body};
+    &:hover {
+      background: ${theme.colors.danger};
+      color: ${theme.colors.body};
     }
   `}
 `;

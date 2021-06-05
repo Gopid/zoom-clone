@@ -1,13 +1,19 @@
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from 'styled-components';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import GlobalStyles from 'globalStyles';
 import theme from 'theme';
 import 'assets/font.css';
+import routes from 'routes';
 
 import Header from 'components/Header/Header';
 
+const pagesWithoutHeader = [routes.MEETING];
+
 const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -29,7 +35,7 @@ const MyApp = ({ Component, pageProps }: AppProps): JSX.Element => {
         <meta name="apple-mobile-web-app-status-bar-style" content="#ffffff" />
       </Head>
       <ThemeProvider theme={theme}>
-        <Header />
+        {!pagesWithoutHeader.includes(router.pathname) && <Header />}
         <GlobalStyles />
         <Component {...pageProps} />
       </ThemeProvider>
