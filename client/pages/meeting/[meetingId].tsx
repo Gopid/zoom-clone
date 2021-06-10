@@ -1,14 +1,16 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useRef, useLayoutEffect } from 'react';
 import styled, { createGlobalStyle } from 'styled-components';
 import ControlBars from './components/ControlBars/ControlBars';
 import ParticipantHighlight from './components/ParticipantHighlight/Participanthighlight';
-import WebcamDisplay from 'components/common/WebcamDisplay/WebcamDisplay';
+import { InputWebcamDisplay } from 'components/common/WebcamDisplay/WebcamDisplay';
 import { itemSizes } from 'pages/meeting/constants';
 
 const Meeting: FunctionComponent = () => {
   const [userMediaStream, setUserMediaStream] = useState<MediaStream | null>(null);
-  const [isWebcamOn, setIsWebcamOn] = useState(false);
-  const [isMicrophoneOn, setIsMicrophoneOn] = useState(false);
+  const [isWebcamOn, setIsWebcamOn] = useState(true);
+  const [isMicrophoneOn, setIsMicrophoneOn] = useState(true);
+  const displayName =
+    'Other One Other One Other One Other One Other One Other One Other One Other One';
 
   const toggleWebcam = () => {
     setIsWebcamOn(!isWebcamOn);
@@ -31,11 +33,20 @@ const Meeting: FunctionComponent = () => {
       onMicrophoneClick={toggleMicrophone}
     >
       <GlobalStyles />
-      <ParticipantHighlight mediaStreams={[userMediaStream]} />
+      <ParticipantHighlight
+        participants={[
+          {
+            isSelf: true,
+            displayName,
+            mediaStream: userMediaStream,
+          },
+        ]}
+      />
       <StyledStage>
-        <WebcamDisplay
-          isInput
+        <InputWebcamDisplay
+          displayName={displayName}
           isWebcamOn={isWebcamOn}
+          isMicrophoneOn={isMicrophoneOn}
           height={itemSizes.stageHeight}
           onUserMedia={onUserMedia}
         />

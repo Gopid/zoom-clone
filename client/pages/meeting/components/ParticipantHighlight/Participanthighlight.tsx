@@ -1,23 +1,35 @@
 import React, { FunctionComponent } from 'react';
 import styled from 'styled-components';
-import WebcamDisplay from 'components/common/WebcamDisplay/WebcamDisplay';
+import { WebcamDisplay } from 'components/common/WebcamDisplay/WebcamDisplay';
 import { itemSizes } from 'pages/meeting/constants';
 
 interface ParticipantHighlightProps {
-  mediaStreams: Array<MediaStream | null>;
+  participants: Array<{ isSelf?: boolean; displayName: string; mediaStream: MediaStream | null }>;
 }
 
-const ParticipantHighlight: FunctionComponent<ParticipantHighlightProps> = ({ mediaStreams }) => {
+const ParticipantHighlight: FunctionComponent<ParticipantHighlightProps> = ({ participants }) => {
   return (
     <StyledParticipantHighlight>
-      {mediaStreams.map((mediaStream, index) => (
-        <StyledWebcamDisplay
-          key={index}
-          isWebcamOn
-          height={itemSizes.participantHighlightHeight}
-          mediaStream={mediaStream}
-        />
-      ))}
+      {participants.map((participant, index) => {
+        const audioTracks = participant.mediaStream?.getAudioTracks() || [];
+        const videoTracks = participant.mediaStream?.getVideoTracks() || [];
+
+        const isMicrophoneOn = audioTracks.some((audioTrack) => audioTrack.readyState === 'live');
+        const isWebcamOn = videoTracks.some((videoTrack) => videoTrack.readyState === 'live');
+
+        return (
+          <StyledWebcamDisplay
+            displayName={participant.displayName}
+            isSelf={participant.isSelf}
+            key={index}
+            isHighlight
+            isWebcamOn={isWebcamOn}
+            isMicrophoneOn={isMicrophoneOn}
+            height={itemSizes.participantHighlightHeight}
+            mediaStream={participant.mediaStream}
+          />
+        );
+      })}
     </StyledParticipantHighlight>
   );
 };

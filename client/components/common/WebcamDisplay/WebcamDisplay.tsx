@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Webcam from 'react-webcam';
 import { css, DefaultTheme, ThemedStyledProps } from 'styled-components';
+import Webcam from 'components/common/Webcam/Webcam';
 
 const videoConstraints = {
   width: 1280,
@@ -9,22 +9,36 @@ const videoConstraints = {
   facingMode: 'user',
 };
 
-interface WebcamDisplayProps {
+interface BaseProps {
+  displayName: string;
   height: number;
   className?: string;
-  // When it's an input
-  isWebcamOn?: boolean;
-  isInput?: boolean;
-  onUserMedia?: (stream: MediaStream) => void;
-  // When it's for display
-  mediaStream?: MediaStream | null;
+  isWebcamOn: boolean;
+  isMicrophoneOn: boolean;
+  isHighlight?: boolean;
 }
 
-const WebcamDisplay: FunctionComponent<WebcamDisplayProps> = ({
+type mediaStream = MediaStream | null;
+type onUserMedia = (stream: MediaStream) => void;
+
+interface BaseWebcamDisplayProps extends BaseProps {
+  // When it's an input
+  isInputStream?: boolean;
+  onUserMedia?: onUserMedia;
+  // When it's for display
+  isSelf?: boolean;
+  mediaStream?: mediaStream;
+}
+
+const BaseWebcamDisplay: FunctionComponent<BaseWebcamDisplayProps> = ({
+  displayName,
   height,
-  isWebcamOn = false,
+  isWebcamOn,
+  isMicrophoneOn,
   className,
-  isInput = false,
+  isSelf = false,
+  isInputStream = false,
+  isHighlight = false,
   onUserMedia,
   mediaStream = null,
   ...props
@@ -37,23 +51,40 @@ const WebcamDisplay: FunctionComponent<WebcamDisplayProps> = ({
     videoRef.current.srcObject = mediaStream;
   }, [mediaStream]);
 
-  if (isInput)
-    return (
-      <StyledDisplay height={height} isWebcamOn={isWebcamOn} className={className}>
+  return (
+    <StyledDisplay height={height} isWebcamOn={isWebcamOn} className={className}>
+      {isInputStream ? (
         <Webcam
-          videoConstraints={isWebcamOn ? videoConstraints : false}
-          audio={false}
+          video={isWebcamOn ? videoConstraints : false}
+          audio={isMicrophoneOn}
           onUserMedia={onUserMedia}
           {...props}
         />
-      </StyledDisplay>
-    );
-
-  return (
-    <StyledDisplay height={height} isWebcamOn={Boolean(mediaStream)} className={className}>
-      <video autoPlay playsInline ref={videoRef}></video>
+      ) : (
+        <video autoPlay playsInline ref={videoRef} muted={isSelf || isInputStream}></video>
+      )}
+      <StyledDisplayName isWebcamOn={isWebcamOn} isHighlight={isHighlight}>
+        {displayName}
+      </StyledDisplayName>
     </StyledDisplay>
   );
+};
+
+interface InputWebcamDisplayProps extends BaseProps {
+  onUserMedia: onUserMedia;
+}
+
+export const InputWebcamDisplay: FunctionComponent<InputWebcamDisplayProps> = (props) => {
+  return <BaseWebcamDisplay isInputStream {...props} />;
+};
+
+interface WebcamDisplayProps extends BaseProps {
+  isSelf?: boolean;
+  mediaStream: mediaStream;
+}
+
+export const WebcamDisplay: FunctionComponent<WebcamDisplayProps> = (props) => {
+  return <BaseWebcamDisplay {...props} />;
 };
 
 const screenSizing = ({ height }: { height: number }) => css`
@@ -64,14 +95,36 @@ const screenSizing = ({ height }: { height: number }) => css`
   max-width: ${(height / 9) * 16}vh;
 `;
 
-const StyledDisplay = styled.div<{ height: number; isWebcamOn: boolean }>`
-  ${(props) => screenSizing({ height: props.height })}
+const StyledDisplayName = styled.p<{ isHighlight: boolean; isWebcamOn: boolean }>`
+  color: ${(props) => props.theme.colors.offText};
+  font-size: ${(props) => props.theme.pxToRem(props.isHighlight ? 20 : 60)};
+  margin: 0;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 85vw;
+  padding: 0 ${(props) => props.theme.pxToRem(20)};
+  text-align: center;
+  white-space: nowrap;
 
-  & video {
-    ${(props) => !props.isWebcamOn && 'display: none;'}
-    width: 100%;
-    height: 100%;
+  // Either show display name or video stream
+  & {
+    ${(props) => props.isWebcamOn && 'display: none;'}
   }
 `;
 
-export default WebcamDisplay;
+const StyledDisplay = styled.div<{ height: number; isWebcamOn: boolean }>`
+  ${(props) => screenSizing({ height: props.height })}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & video {
+    width: 100%;
+    height: 100%;
+  }
+
+  // Either show display name or video stream
+  & video {
+    ${(props) => !props.isWebcamOn && 'display: none;'}
+  }
+`;
